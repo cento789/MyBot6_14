@@ -74,7 +74,8 @@ Local $sModversion
 ; "1209" ; Add 8F CSV Attack Files From AsesomeGamer 
 ; "1210" ; Updates for "CSV Fast Deployment Fusion" ( Speed Up FF )
 ; "1211" ; Updates for CSV Attack Files ( Force All Troops Deploy )
-$sModversion = "1212" ; Fix for King activated on deploy
+; "1212" ; Fix for King activated on deploy
+$sModversion = "1213" ; CSV Fusion support for BlueStacks ( AwesomeGames .csv )
 $sBotVersion = "v6.1.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".1.r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 

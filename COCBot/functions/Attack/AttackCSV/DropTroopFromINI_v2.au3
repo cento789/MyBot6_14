@@ -252,9 +252,9 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 					Switch Eval("e" & $troopName)
 						Case $eBarb To $eLava ; drop normal troops
 							If $debug = True Then
-								Setlog("AndroidFastClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ")")
+								Setlog("PureClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ")")
 							Else
-								AndroidFastClick($pixel[0], $pixel[1], $qty2, $delayPoint)
+								PureClick($pixel[0], $pixel[1], $qty2, $delayPoint)
 							EndIf
 						Case $eKing
 							If $debug = True Then
