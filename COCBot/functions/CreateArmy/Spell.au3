@@ -21,7 +21,7 @@ Func BrewSpells()
 
 	If $iTotalCountSpell = 0 Then Return
 
-	If $numFactorySpellAvaiables = 1 And ($iLightningSpellComp > 0 Or $iRageSpellComp > 0 Or $iHealSpellComp > 0 Or $iJumpSpellComp > 0 Or $iFreezeSpellComp > 0) Then
+	If $numFactorySpellAvaiables = 1 And ($iLightningSpellComp + $iRageSpellComp + $iHealSpellComp + $iJumpSpellComp + $iFreezeSpellComp) > 0 Then
 		$iBarrHere = 0
 		While Not (isSpellFactory())
 			If Not (IsTrainPage()) Then Return
@@ -186,7 +186,7 @@ Func BrewSpells()
 		EndIf
 	EndIf
 
-	If $numFactoryDarkSpellAvaiables = 1 And ($iPoisonSpellComp > 0 Or $iEarthSpellComp > 0 Or $iHasteSpellComp > 0) Then
+	If $numFactoryDarkSpellAvaiables = 1 And ($iPoisonSpellComp + $iEarthSpellComp + $iHasteSpellComp) > 0 Then
 		$iBarrHere = 0
 		While Not (isDarkSpellFactory())
 			If Not (IsTrainPage()) Then Return

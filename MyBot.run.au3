@@ -75,7 +75,9 @@ Local $sModversion
 ; "1210" ; Updates for "CSV Fast Deployment Fusion" ( Speed Up FF )
 ; "1211" ; Updates for CSV Attack Files ( Force All Troops Deploy )
 ; "1212" ; Fix for King activated on deploy
-$sModversion = "1213" ; CSV Fusion support for BlueStacks ( AwesomeGames .csv )
+; "1213" ; CSV Fusion support for BlueStacks ( AwesomeGames .csv )
+$sModversion = "1214" ; Updates for "CSV Fast Deployment" ( fix Issues for troops clumping )
+; $sModversion = "1215" ; Add Multi Finger Attack ( 8F Finger Implosion )
 $sBotVersion = "v6.1.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".1.r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
@@ -539,7 +541,13 @@ Func Attack() ;Selects which algorithm
 		If $debugsetlog=1 Then Setlog("start milking attack",$COLOR_RED)
 		Alogrithm_MilkingAttack()
 	Else
-		If $debugsetlog=1 Then Setlog("start standard attack",$COLOR_RED)
+		If $debugsetlog=1 Then
+			If ($iMatchMode = $DB and $iAtkAlgorithm[$DB] > 2) or ($iMatchMode = $LB and  $iAtkAlgorithm[$LB] > 1 ) Then
+				Setlog("Start Multi Finger Attack",$COLOR_RED)
+			Else
+				Setlog("Start standard attack",$COLOR_RED)
+			EndIf
+		EndIf
 		algorithm_AllTroops()
 	EndIf
 EndFunc   ;==>Attack

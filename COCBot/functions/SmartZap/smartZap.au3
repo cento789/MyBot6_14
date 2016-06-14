@@ -294,6 +294,9 @@ Func zapDrill($THSpell, $x, $y)
 	Local $Spell = -1
 	Local $name = ""
 
+	; If _Sleep(10) Then Return
+	; If $Restart = True Then Return
+
 	For $i = 0 To UBound($atkTroops) - 1
 		If $atkTroops[$i][0] = $THSpell Then
 			$Spell = $i

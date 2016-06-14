@@ -1430,8 +1430,29 @@ Global $THSnipeBeforeDBEnable = 0 , $THSnipeBeforeLBEnable = 0
 Global $THSnipeBeforeDBTiles = 0 , $THSnipeBeforeLBTiles = 0
 Global $THSnipeBeforeDBScript = 0 , $THSnipeBeforeLBScript = 0
 
-; by AwesomeGamer
-Global $iChkDontRemove, $chkDontRemove
+; AwesomeGamer DEB / Spells Continue
+Global $iChkDontRemove = 1
+Global $chkDontRemove = True
+Global $iChkBarrackSpell = 1
+Global $chkBarrackSpell = True
+
+; AwesomeGamer CSV Mod
+Global $attackcsv_use_red_line = 1
+Global $TroopDropNumber = 0
+Global $remainingTroops[12][2]
+
+; AwesomeGamer CSV Deployment Speed Mod
+Global $isldSelectedCSVSpeed[$iModeCount], $iCSVSpeeds[8]
+$isldSelectedCSVSpeed[$DB] = 3
+$isldSelectedCSVSpeed[$LB] = 3
+$iCSVSpeeds[0] = .25
+$iCSVSpeeds[1] = .5
+$iCSVSpeeds[2] = .75
+$iCSVSpeeds[3] = 1
+$iCSVSpeeds[4] = 1.25
+$iCSVSpeeds[5] = 1.5
+$iCSVSpeeds[6] = 1.75
+$iCSVSpeeds[7] = 2
 
 ; Close while training variables
 Global $ichkCloseTraining = 1
@@ -1484,21 +1505,3 @@ Global Const $drillLevelSteal[6] = [59, _
 								    251, _
 								    343, _
 								    479]
-
-;AwesomeGamer CSV Mod
-Global $attackcsv_use_red_line = 1
-Global $TroopDropNumber = 0
-Global $remainingTroops[12][2]
-
-;CSV Deployment Speed Mod
-Global $isldSelectedCSVSpeed[$iModeCount], $iCSVSpeeds[8]
-$isldSelectedCSVSpeed[$DB] = 3
-$isldSelectedCSVSpeed[$LB] = 3
-$iCSVSpeeds[0] = .25
-$iCSVSpeeds[1] = .5
-$iCSVSpeeds[2] = .75
-$iCSVSpeeds[3] = 1
-$iCSVSpeeds[4] = 1.25
-$iCSVSpeeds[5] = 1.5
-$iCSVSpeeds[6] = 1.75
-$iCSVSpeeds[7] = 2
