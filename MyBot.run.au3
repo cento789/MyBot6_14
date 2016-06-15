@@ -76,8 +76,8 @@ Local $sModversion
 ; "1211" ; Updates for CSV Attack Files ( Force All Troops Deploy )
 ; "1212" ; Fix for King activated on deploy
 ; "1213" ; CSV Fusion support for BlueStacks ( AwesomeGames .csv )
-$sModversion = "1214" ; Updates for "CSV Fast Deployment" ( fix Issues for troops clumping )
-; $sModversion = "1215" ; Add Multi Finger Attack ( 8F Finger Implosion )
+; "1214" ; Updates for "CSV Fast Deployment" ( 2016.14.06 )
+$sModversion = "1215" ; Updates for "CSV Fast Deployment" ( 2016.15.06 )
 $sBotVersion = "v6.1.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".1.r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
