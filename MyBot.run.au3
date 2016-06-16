@@ -67,8 +67,8 @@ Local $sModversion
 ; "1202" ; CCWT user set max sleep time
 ; "1203" ; CCWT try request troops before
 ; "1204" ; Valks Train HotFix
-; "1205" ; CSV Fast Deployment Fusion
-; "1206" ; CSV Deploy Speed Mod - mikemikemikecoc
+; "1205" ; CSV Fast Deployment Fusion - @MikeCoC
+; "1206" ; CSV Deploy Speed Mod - @MikeCoC
 ; "1207" ; Allow BOT cpu priority only for single process
 ; "1208" ; Attack Now Button ( Attack Plan, Search & Attack, Active Base, Attack )
 ; "1209" ; Add 8F CSV Attack Files From AsesomeGamer 
@@ -78,7 +78,8 @@ Local $sModversion
 ; "1213" ; CSV Fusion support for BlueStacks ( AwesomeGames .csv )
 ; "1214" ; Updates for "CSV Fast Deployment" ( 2016.14.06 )
 ; "1215" ; Updates for "CSV Fast Deployment" ( 2016.15.06 )
-$sModversion = "1216" ; CSV Fast Deployment ( Revert Back to r1213 )
+; "1216" ; CSV Fast Deployment ( Revert Back to r1213 )
+$sModversion = "1217" ; Pre-Train spells when army camps and spell factory are full - @MikeCoC
 $sBotVersion = "v6.1.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".1.r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
