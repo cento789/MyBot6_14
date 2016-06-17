@@ -79,7 +79,8 @@ Local $sModversion
 ; "1214" ; Updates for "CSV Fast Deployment" ( 2016.14.06 )
 ; "1215" ; Updates for "CSV Fast Deployment" ( 2016.15.06 )
 ; "1216" ; CSV Fast Deployment ( Revert Back to r1213 )
-$sModversion = "1217" ; Pre-Train spells when army camps and spell factory are full - @MikeCoC
+; "1217" ; Pre-Train spells when army camps and spell factory are full - @MikeCoC
+$sModversion = "1218" ; Disable FastClicks when Attack using "CSV Fast Deployment"
 $sBotVersion = "v6.1.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".1.r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
@@ -535,12 +536,15 @@ Func AttackMain() ;Main control for attack functions
 EndFunc   ;==>AttackMain
 
 Func Attack() ;Selects which algorithm
+	Local $bTemp = $AndroidAdbClicksEnabled
 	SetLog(" ====== Start Attack ====== ", $COLOR_GREEN)
 	If  ($iMatchMode = $DB and $iAtkAlgorithm[$DB] = 1) or ($iMatchMode = $LB and  $iAtkAlgorithm[$LB] = 1) Then
 		If $debugsetlog=1 Then Setlog("start scripted attack",$COLOR_RED)
+		$AndroidAdbClicksEnabled = False
 		Algorithm_AttackCSV()
 	Elseif $iMatchMode= $DB and  $iAtkAlgorithm[$DB] = 2 Then
 		If $debugsetlog=1 Then Setlog("start milking attack",$COLOR_RED)
+		$AndroidAdbClicksEnabled = False
 		Alogrithm_MilkingAttack()
 	Else
 		If $debugsetlog=1 Then
@@ -552,6 +556,7 @@ Func Attack() ;Selects which algorithm
 		EndIf
 		algorithm_AllTroops()
 	EndIf
+	$AndroidAdbClicksEnabled = $bTemp
 EndFunc   ;==>Attack
 
 
