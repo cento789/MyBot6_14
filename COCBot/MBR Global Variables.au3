@@ -47,6 +47,7 @@
 #include <Process.au3>
 #include <GuiListView.au3>
 #include <GUIToolTip.au3>
+#include <ProgressConstants.au3> ; Added for Splash
 
 Global Const $DEFAULT_HEIGHT = 780
 Global Const $DEFAULT_WIDTH = 860
@@ -1436,23 +1437,13 @@ Global $chkDontRemove = True
 Global $iChkBarrackSpell = 1
 Global $chkBarrackSpell = True
 
-; AwesomeGamer CSV Mod
+; Splash Variables
+Global $hSplash, $hSplashProgress, $lSplashStatus, $lSplashTitle, $iTotalSteps = 11, $iCurrentStep = 0
+
+;AwesomeGamer CSV Mod
 Global $attackcsv_use_red_line = 1
 Global $TroopDropNumber = 0
 Global $remainingTroops[12][2]
-
-; AwesomeGamer CSV Deployment Speed Mod
-Global $isldSelectedCSVSpeed[$iModeCount], $iCSVSpeeds[8]
-$isldSelectedCSVSpeed[$DB] = 3
-$isldSelectedCSVSpeed[$LB] = 3
-$iCSVSpeeds[0] = .25
-$iCSVSpeeds[1] = .5
-$iCSVSpeeds[2] = .75
-$iCSVSpeeds[3] = 1
-$iCSVSpeeds[4] = 1.25
-$iCSVSpeeds[5] = 1.5
-$iCSVSpeeds[6] = 1.75
-$iCSVSpeeds[7] = 2
 
 ;CSV Deployment Speed Mod
 Global $isldSelectedCSVSpeed[$iModeCount], $iCSVSpeeds[13]
@@ -1498,28 +1489,5 @@ Global $dailyAttacks = 0, $dailyAttackLimit = 0
 Global $RandomTimer = True
 Global $sTimerRandomHalt
 
-; SmartZap GUI variables - Added by LunaEclipse
-Global $ichkSmartZap = 1
-Global $ichkSmartZapDB = 1
-Global $ichkSmartZapSaveHeroes = 1
-Global $itxtMinDE = 300
-
-; SmartZap stats - Added by LunaEclipse
-Global $smartZapGain = 0
-Global $numLSpellsUsed = 0
-
-; SmartZap Array to hold Total Amount of DE available from Drill at each level (1-6) - Added by LunaEclipse
-Global Const $drillLevelHold[6] = [120, _
-								   225, _
-								   405, _
-								   630, _
-								   960, _
-								   1350]
-
-; SmartZap Array to hold Amount of DE available to steal from Drills at each level (1-6) - Added by LunaEclipse
-Global Const $drillLevelSteal[6] = [59, _
-                                    102, _
-								    172, _
-								    251, _
-								    343, _
-								    479]
+; MOD files - Added by LunaEclipse
+#include "functions\LunaEclipse\Global_Variables.au3"

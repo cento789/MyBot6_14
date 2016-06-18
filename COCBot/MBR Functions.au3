@@ -14,6 +14,7 @@
 ; ===============================================================================================================================
 
 #include "functions\GUI\GUI_State.au3"
+#include "functions\GUI\SplashStep.au3"
 #include "functions\Other\UpdateStatsWall.au3"
 #include "functions\Config\profileFunctions.au3"
 
@@ -254,6 +255,6 @@
 ; Close while training
 #include "functions\Psychic Octopus\psychicOctopus.au3"
 
-; SmartZap files - Added by LunaEclipse
-#include "functions\SmartZap\drillSearch.au3"
-#include "functions\SmartZap\smartZap.au3"
+; MOD files - Added by LunaEclipse
+#include "functions\LunaEclipse\Include_Files.au3"
+

@@ -27,12 +27,8 @@
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
 ;~ Boost launch time by increasing process priority (will be restored again when finished launching)
-Local $iBotProcessPriority
-If $CmdLine[0] < 2 Then
-	$iBotProcessPriority = _ProcessGetPriority(@AutoItPID)
-	ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
-Endif
-
+Local $iBotProcessPriority = _ProcessGetPriority(@AutoItPID)
+ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 
 Global $iBotLaunchTime = 0
 Local $hBotLaunchTime = TimerInit()
@@ -80,10 +76,18 @@ Local $sModversion
 ; "1215" ; Updates for "CSV Fast Deployment" ( 2016.15.06 )
 ; "1216" ; CSV Fast Deployment ( Revert Back to r1213 )
 ; "1217" ; Pre-Train spells when army camps and spell factory are full - @MikeCoC
-$sModversion = "1218" ; Disable FastClicks when Attack using "CSV Fast Deployment"
+; "1218" ; Disable FastClicks when Attack using "CSV Fast Deployment"
+; "1219" ; Add SplashScreen while loading MyBot - @MikeCoC
+$sModversion = "1220" ; Enable FastClicks while using "CSV Fast Deployment"
 $sBotVersion = "v6.1.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".1.r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
+Global $sBotTitleDefault = $sBotTitle
+
+$ichkDisableSplash = IniRead($config, "General", "ChkDisableSplash", "0")
+#include "COCBot\GUI\MBR GUI Design Splash.au3"
+
+SplashStep("Loading Android functions...")
 Opt("WinTitleMatchMode", 3) ; Window Title exact match mode
 #include "COCBot\functions\Android\Android.au3"
 
@@ -91,12 +95,15 @@ Opt("WinTitleMatchMode", 3) ; Window Title exact match mode
 #include "COCBot\functions\Other\Multilanguage.au3"
 DetectLanguage()
 
+SplashStep("Detecting Android...")
 If $aCmdLine[0] < 2 Then
 	DetectRunningAndroid()
 	If Not $FoundRunningAndroid Then DetectInstalledAndroid()
 EndIf
 ; Update Bot title
 $sBotTitle = $sBotTitle & "(" & ($AndroidInstance <> "" ? $AndroidInstance : $Android) & ")" ;Do not change this. If you do, multiple instances will not work.
+
+UpdateSplashTitle($sBotTitle)
 
 If $bBotLaunchOption_Restart = True Then
    If CloseRunningBot($sBotTitle) = True Then
@@ -196,9 +203,7 @@ $iBotLaunchTime = TimerDiff($hBotLaunchTime)
 SetDebugLog("MyBot.run launch time " & Round($iBotLaunchTime) & " ms.")
 
 ;~ Restore process priority
-If $aCmdLine[0] < 2 Then
-	ProcessSetPriority(@AutoItPID, $iBotProcessPriority)
-EndIF
+ProcessSetPriority(@AutoItPID, $iBotProcessPriority)
 
 ;AutoStart Bot if request
 AutoStart()
@@ -536,15 +541,19 @@ Func AttackMain() ;Main control for attack functions
 EndFunc   ;==>AttackMain
 
 Func Attack() ;Selects which algorithm
-	Local $bTemp = $AndroidAdbClicksEnabled
+	Local $bADBTemp = $AndroidAdbClicksEnabled
+	If ( $Android = "BlueStacks" ) Or ( $Android = "BlueStacks2" ) Then
+		If $AndroidAdbClicksEnabled Then 
+			$AndroidAdbClicksEnabled = False
+	   	SetLog( $Android & ": FastClicks Disabled (Unsuported)", $COLOR_GREEN)
+		EndIf
+	EndIf
 	SetLog(" ====== Start Attack ====== ", $COLOR_GREEN)
 	If  ($iMatchMode = $DB and $iAtkAlgorithm[$DB] = 1) or ($iMatchMode = $LB and  $iAtkAlgorithm[$LB] = 1) Then
 		If $debugsetlog=1 Then Setlog("start scripted attack",$COLOR_RED)
-		$AndroidAdbClicksEnabled = False
 		Algorithm_AttackCSV()
 	Elseif $iMatchMode= $DB and  $iAtkAlgorithm[$DB] = 2 Then
 		If $debugsetlog=1 Then Setlog("start milking attack",$COLOR_RED)
-		$AndroidAdbClicksEnabled = False
 		Alogrithm_MilkingAttack()
 	Else
 		If $debugsetlog=1 Then
@@ -556,7 +565,7 @@ Func Attack() ;Selects which algorithm
 		EndIf
 		algorithm_AllTroops()
 	EndIf
-	$AndroidAdbClicksEnabled = $bTemp
+	If $bADBTemp Then $AndroidAdbClicksEnabled = $bADBTemp
 EndFunc   ;==>Attack
 
 
