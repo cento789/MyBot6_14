@@ -255,6 +255,5 @@
 ; Close while training
 #include "functions\Psychic Octopus\psychicOctopus.au3"
 
-; MOD files - Added by LunaEclipse
+; MOD files - From LunaEclipse
 #include "functions\LunaEclipse\Include_Files.au3"
-

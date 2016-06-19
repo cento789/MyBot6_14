@@ -25,5 +25,8 @@
 #include "Attack Profiles\customDeploy.au3"
 
 ; SmartZap files - Added by LunaEclipse
-#include "drillSearch.au3"
-#include "smartZap.au3"
+#include "SmartZap\drillSearch.au3"
+#include "SmartZap\smartZap.au3"
+
+; Other files - Added by LunaEclipse
+#include "BotInfo\runningBots.au3"

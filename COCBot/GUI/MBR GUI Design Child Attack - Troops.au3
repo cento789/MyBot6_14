@@ -289,11 +289,11 @@ Local $x = $xStart +  25, $y = $yStart +  330
 	
 	; Fast ADB Clicks
 Local $x = $xStart +  170, $y = $yStart +  330
-	$grpStatsMisc = GUICtrlCreateGroup("Miscellaneous Settings", $x - 20, $y - 20, 283, 45)
+	$grpStatsMisc = GUICtrlCreateGroup("Fast Clicks", $x - 20, $y - 20, 283, 45)
 		$y += 0
-		$chkFastADBClicks = GUICtrlCreateCheckbox("Enable Fast ADB Clicks", $x - 10, $y - 5, -1, -1)
-			$txtTip = "Tick this to enable faster ADB deployment for MEmu, NoX and Droid4x" & @CRLF & @CRLF & _
-				      "[Experimental Feature] if you have any deployment issue: disable it."
+		$chkFastADBClicks = GUICtrlCreateCheckbox("Use Fast ADB Clicks (MEmu, Droid4X and NoX)", $x - 10, $y - 5, -1, -1)
+			$txtTip = "Tick this to enable faster ADB deployment (for: MEmu, NoX and Droid4x)" & @CRLF & @CRLF & _
+				      "[Experimental Feature] if you have any deployment issue: please disable it."
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkFastADBClicks")
 	GUICtrlCreateGroup("", -99, -99, 1, 1)

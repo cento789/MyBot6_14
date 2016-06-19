@@ -13,20 +13,16 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-; Drop remaining troops
-Func dropRemainingTroopsCustom($side)
-	SetLog("Dropping left over troops", $COLOR_BLUE)
-	PrepareAttack($iMatchMode, True) ; Check remaining quantities
-
-	Local $dropVectors[0][0], $listInfoDeploy = $DEFAULT_REMAINING_TROOPS_DEPLOY
-
-	; Setup the attack vectors for the troops
-	customDeployVectors($dropVectors, $listInfoDeploy, $side)
+; Set up the vectors to deploy troops
+Func customDeployVectors(ByRef $dropVectors, $listInfoDeploy, $sideCoords)
+	If Not IsArray($dropVectors) Or Not IsArray($listInfoDeploy) Then Return
 	
-	Local $kind, $waveNumber, $waveCount, $position, $remainingWaves, $dropAmount
+	ReDim $dropVectors[UBound($listInfoDeploy)][2]
+	
+	Local $kind, $waveNumber, $waveCount, $position, $remainingWaves, $waveDropAmount, $dropAmount, $barPosition
+	Local $startPoint[2] = [0, 0], $endPoint[2] = [0, 0]
 	Local $aDeployButtonPositions = getUnitLocationArray()
 	Local $unitCount = unitCountArray()
-	Local $barPosition = -1
 
 	For $i = 0 To UBound($listInfoDeploy) - 1
 		$kind = $listInfoDeploy[$i][0]
@@ -35,20 +31,30 @@ Func dropRemainingTroopsCustom($side)
 		$position = $listInfoDeploy[$i][4]
 		$remainingWaves = ($waveCount - $waveNumber) + 1
 
-		If $kind < $eKing Then
+		If $kind <= $eKing Then
 			$barPosition = $aDeployButtonPositions[$kind]
-			
-			If $barPosition <> -1 Then
-				$dropAmount = calculateDropAmount($unitCount[$kind], $remainingWaves, $position)
-				$unitCount[$kind] -= $dropAmount
 
+			If $barPosition <> -1 And Number($position) = 0 Then
+				$waveDropAmount = calculateDropAmount($unitCount[$kind], $remainingWaves, $position)
+				$unitCount[$kind] -= $waveDropAmount
+
+				; Deployment Side - Left Half
+				$dropAmount = Ceiling($waveDropAmount / 2)
 				If $dropAmount > 0 Then
-					SetLog("Dropping " & getWaveName($waveNumber, $waveCount) & " wave of " & $dropAmount & " " & getTranslatedTroopName($kind), $COLOR_GREEN)
+					$startPoint = convertToPoint($sideCoords[2][0], $sideCoords[2][1])
+					$endPoint = convertToPoint($sideCoords[0][0], $sideCoords[0][1])
+					addVector($dropVectors, $i, 0, $startPoint, $endPoint, $dropAmount)
+					$waveDropAmount -= $dropAmount
+				EndIf
 
-					If customDeployTroops($dropVectors, $i, $barPosition, $dropAmount, $position) Then
-						If _SleepAttack(SetSleep(1)) Then Return
-					EndIf
-				EndIf				
+				; Deployment Side - Right Half
+				$dropAmount = $waveDropAmount
+				If $dropAmount > 0 Then
+					$startPoint = convertToPoint($sideCoords[2][0], $sideCoords[2][1])
+					$endPoint = convertToPoint($sideCoords[4][0], $sideCoords[4][1])
+					addVector($dropVectors, $i, 1, $startPoint, $endPoint, $dropAmount + 1)
+					$waveDropAmount -= $dropAmount
+				EndIf
 			EndIf
 		EndIf
 	Next

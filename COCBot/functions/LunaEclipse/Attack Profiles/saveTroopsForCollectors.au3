@@ -211,19 +211,19 @@ Func launchSaveTroopsForCollectors($listInfoDeploy, $CC, $King, $Queen, $Warden,
 	calculateOverallCollectorInfo($collectorDropPoints, $collectorDropPointsCloser, $aMines, $aElixir, $aDrills, $numMines, $numElixir, $numDrills, $totalCollectors, $exposedCollectors)
 
 	If ($exposedCollectors / $totalCollectors) * 100 < $percentCollectors Then
-		If $useAllSides = 1 Then
+		If $useFFBarchST = 1 Then
 			SetLog("There are less than " & $percentCollectors & "% collectors near the RED LINE!", $COLOR_BLUE)
-			SetLog("Change the Attack Strategy to All Sides...", $COLOR_BLUE)
+			SetLog("Change the Attack Strategy to Multi Finger...", $COLOR_BLUE)
 
 			If _SleepAttack(500) Then Return
 
-			; Change settings needed for all sides mode
+			; Change settings needed for multi finger mode
+			$usingMultiFinger = True
 			$nbSides = 4
-			$usingAllSides = True
 
-			; Change to the All Sides List Deploy
-			Local $allSidesDeploy = getDeploymentInfo($nbSides, $eAllSides)
-			launchStandard($allSidesDeploy, $CC, $King, $Queen, $Warden, 4)
+			; Change to the multi finger List Deploy
+			Local $FFListDeploy = getDeploymentInfo($nbSides, $eMultiFinger)
+			launchMultiFinger($FFListDeploy, $CC, $King, $Queen, $Warden, 1)
 
 			Return True
 		Else
@@ -233,6 +233,7 @@ Func launchSaveTroopsForCollectors($listInfoDeploy, $CC, $King, $Queen, $Warden,
 		EndIf
 	Else
 		SetLog("Attacking with save troops for collectors.", $COLOR_BLUE)
+
 		While IsAttackPage() And $exposedCollectors > 0 And $unitCount[$eBarb] + $unitCount[$eArch] + $unitCount[$eWiza] + $unitCount[$eMini] + $unitCount[$eGobl] > 0
 			For $j = 0 To UBound($collectorDropPoints) - 1
 				For $i = 0 To UBound($listInfoDeploy) - 1
@@ -254,8 +255,8 @@ Func launchSaveTroopsForCollectors($listInfoDeploy, $CC, $King, $Queen, $Warden,
 									; Drop these unit types further away
 									$dropPoint = $collectorDropPoints[$j]
 
-									SetLog("Dropping " & $dropAmount & " " & getTranslatedTroopName($kind) & " at random location near " & $dropPoint[0] & "," & $dropPoint[1], $COLOR_BLUE)
-									If dropUnit($dropPoint, $kind, $dropAmount) Then
+									SetLog("Dropping " & $dropAmount & " " & getTranslatedTroopName($kind) & " at " & $dropPoint[0] & "," & $dropPoint[1], $COLOR_BLUE)
+									If dropUnit($dropPoint[0], $dropPoint[1], $kind, $dropAmount, 15, 15) Then
 										If _SleepAttack(SetSleep(1)) Then Return
 									EndIf
 
@@ -269,8 +270,8 @@ Func launchSaveTroopsForCollectors($listInfoDeploy, $CC, $King, $Queen, $Warden,
 										$lastDropPoint[0] = $dropPoint[0]
 										$lastDropPoint[1] = $dropPoint[1]
 
-										SetLog("Dropping " & $dropAmount & " " & getTranslatedTroopName($kind) & " at random location near " & $dropPoint[0] & "," & $dropPoint[1], $COLOR_BLUE)
-										If dropUnit($dropPoint, $kind, $dropAmount) Then
+										SetLog("Dropping " & $dropAmount & " " & getTranslatedTroopName($kind) & " at " & $dropPoint[0] & "," & $dropPoint[1], $COLOR_BLUE)
+										If dropUnit($dropPoint[0], $dropPoint[1], $kind, $dropAmount) Then
 											If _SleepAttack(SetSleep(1)) Then Return
 										EndIf
 
@@ -287,40 +288,38 @@ Func launchSaveTroopsForCollectors($listInfoDeploy, $CC, $King, $Queen, $Warden,
 			SetLog("Waiting for 20 seconds, to see if the collectors are destroyed.", $COLOR_BLUE)
 			If _SleepAttack(20 * 1000) Then Return
 
-			; Make sure we are still able to attack
-			If IsAttackPage() Then
-				; Reset the drop point arrays
-				Dim $collectorDropPoints[0]
-				Dim $collectorDropPointsCloser[0]
+			; Reset the drop point arrays
+			Dim $collectorDropPoints[0]
+			Dim $collectorDropPointsCloser[0]
 
-				; Reset the collector location arrays
-				Dim $aDrills[0]
-				Dim $aElixir[0]
-				Dim $aMines[0]
+			; Reset the collector location arrays
+			Dim $aDrills[0]
+			Dim $aElixir[0]
+			Dim $aMines[0]
 
-				; Recapture Collector Information to determine if we should continue
-				Setlog("Checking for remaining collectors...", $COLOR_BLUE)
-				; Perform all calculations necessary to determine which collectors to attack and drop points
-				calculateOverallCollectorInfo($collectorDropPoints, $collectorDropPointsCloser, $aMines, $aElixir, $aDrills, $numMines, $numElixir, $numDrills, $totalCollectors, $exposedCollectors)
+			; Recapture Collector Information to determine if we should continue
+			Setlog("Checking for remaining collectors...", $COLOR_BLUE)
 
-				; Display the appropriate log entries
-				If $exposedCollectors > 0 Then
-					If $unitCount[$eBarb] + $unitCount[$eArch] + $unitCount[$eWiza] + $unitCount[$eMini] + $unitCount[$eGobl] > 0 Then
-						SetLog("Continue attacking...", $COLOR_BLUE)
-					Else
-						SetLog("No collector attack troops remaining, so lets just exit...", $COLOR_BLUE)
-						ExitLoop
-					EndIf
+			; Perform all calculations necessary to determine which collectors to attack and drop points
+			calculateOverallCollectorInfo($collectorDropPoints, $collectorDropPointsCloser, $aMines, $aElixir, $aDrills, $numMines, $numElixir, $numDrills, $totalCollectors, $exposedCollectors)
+
+			; Display the appropriate log entries
+			If $exposedCollectors > 0 Then
+				If $unitCount[$eBarb] + $unitCount[$eArch] + $unitCount[$eWiza] + $unitCount[$eMini] + $unitCount[$eGobl] > 0 Then
+					SetLog("Continue attacking...", $COLOR_BLUE)
 				Else
-					SetLog("There are no exposed collectors left, so lets just exit...", $COLOR_BLUE)
+					SetLog("No collector attack troops remaining, so lets just exit...", $COLOR_BLUE)
 					ExitLoop
 				EndIf
 			Else
+				SetLog("There are no exposed collectors left, so lets just exit...", $COLOR_BLUE)
 				ExitLoop
 			EndIf
 		WEnd
 	EndIf
 
+	If IsAttackPage() Then SmartZap()
 	CloseBattle(True)
+
 	Return True
 EndFunc   ;==>launchSaveTroopsForCollectors
