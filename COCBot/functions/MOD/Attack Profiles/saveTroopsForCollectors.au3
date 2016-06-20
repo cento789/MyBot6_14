@@ -229,7 +229,7 @@ Func launchSaveTroopsForCollectors($listInfoDeploy, $CC, $King, $Queen, $Warden,
 		Else
 			SetLog("There are less than " & $percentCollectors & "% collectors near the RED LINE!", $COLOR_BLUE)
 			SetLog("Ending the battle so troops are not wasted...", $COLOR_BLUE)
-			CloseBattle(True)
+			Luna_CloseBattle(True)
 		EndIf
 	Else
 		SetLog("Attacking with save troops for collectors.", $COLOR_BLUE)
@@ -319,7 +319,7 @@ Func launchSaveTroopsForCollectors($listInfoDeploy, $CC, $King, $Queen, $Warden,
 	EndIf
 
 	If IsAttackPage() Then SmartZap()
-	CloseBattle(True)
+	Luna_CloseBattle(True)
 
 	Return True
 EndFunc   ;==>launchSaveTroopsForCollectors

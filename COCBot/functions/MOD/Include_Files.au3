@@ -1,4 +1,9 @@
+;
+; LunaEclipse
+;
+
 ; Attack files - Added by LunaEclipse
+#include "algorithm_Attacks.au3"
 #include "attackFunctions.au3"
 #include "unitInfo.au3"
 
@@ -30,3 +35,16 @@
 
 ; Other files - Added by LunaEclipse
 #include "BotInfo\runningBots.au3"
+
+;
+; Promac
+;
+
+#include "Psychic Octopus\psychicOctopus.au3"
+
+;
+; MikeCoC
+;
+
+; SplashScreen
+#include "SplashStep.au3"

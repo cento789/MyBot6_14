@@ -1,5 +1,7 @@
+;
 ; Attack Variables, constants and enums - Added by LunaEclipse
 ;
+
 ; Troop types - Added CC Spell as a type, so clan castle spell can be reported.
 Global Enum  $eCCSpell = $eHaSpell + 1
 
@@ -154,3 +156,73 @@ Global Const $drillLevelSteal[6] = [59, _
 												251, _
 												343, _
 												479]
+
+;
+; AwesomeGamer
+;
+
+; AwesomeGamer DEB / Spells Continue
+Global $iChkDontRemove = 1
+Global $chkDontRemove = True
+Global $iChkBarrackSpell = 1
+Global $chkBarrackSpell = True
+
+; AwesomeGamer CSV Mod
+Global $attackcsv_use_red_line = 1
+Global $TroopDropNumber = 0
+Global $remainingTroops[12][2]
+
+;
+; MikeCoC
+;
+
+; Splash Variables
+Global $hSplash, $hSplashProgress, $lSplashStatus, $lSplashTitle, $iTotalSteps = 11, $iCurrentStep = 0
+
+; CSV Deployment Speed Mod
+Global $isldSelectedCSVSpeed[$iModeCount], $iCSVSpeeds[13]
+$isldSelectedCSVSpeed[$DB] = 5
+$isldSelectedCSVSpeed[$LB] = 5
+$iCSVSpeeds[0] = .1
+$iCSVSpeeds[1] = .25
+$iCSVSpeeds[2] = .5
+$iCSVSpeeds[3] = .75
+$iCSVSpeeds[4] = 1
+$iCSVSpeeds[5] = 1.25
+$iCSVSpeeds[6] = 1.5
+$iCSVSpeeds[7] = 1.75
+$iCSVSpeeds[8] = 2
+$iCSVSpeeds[9] = 2.25
+$iCSVSpeeds[10] = 2.5
+$iCSVSpeeds[11] = 2.75
+$iCSVSpeeds[12] = 3
+
+;
+; Promac
+;
+
+; Close while training variables
+Global $ichkCloseTraining = 1
+Global $minTrainAddition = 1
+Global $maxTrainAddition = 5
+Global $LeaveCoCOpen = 0
+Global $CloseCoCGame = 1
+Global $RandomCoCOpen = 0
+Global $RandomCloseTraining = 0
+Global $RandomCloseTraining2 = 0
+Global $TrainLogoutMaxTime = 1
+Global $TrainLogoutMaxTimeTXT = 15
+
+; Sleep at night variables
+Global $ichkCloseNight = 1
+Global $sleepStart = 0, $sleepEnd = 8
+Global $nextSleepStart = -999, $nextSleepEnd = -999
+
+; Daily attack variables
+Global $ichkLimitAttacks = 1
+Global $rangeAttacksStart = 20, $rangeAttacksEnd = 25
+Global $dailyAttacks = 0, $dailyAttackLimit = 0
+
+; Randomization of functions
+Global $RandomTimer = True
+Global $sTimerRandomHalt

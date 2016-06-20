@@ -14,7 +14,6 @@
 ; ===============================================================================================================================
 
 #include "functions\GUI\GUI_State.au3"
-#include "functions\GUI\SplashStep.au3"
 #include "functions\Other\UpdateStatsWall.au3"
 #include "functions\Config\profileFunctions.au3"
 
@@ -252,8 +251,9 @@
 #include "functions\Village\ClanLevel.au3"
 #include "functions\Village\StarBonus.au3"
 
-; Close while training
-#include "functions\Psychic Octopus\psychicOctopus.au3"
+;
+; MOD files
+;
 
-; MOD files - From LunaEclipse
-#include "functions\LunaEclipse\Include_Files.au3"
+; AwesomeGamer, LunaEclipse, MikeCoC, Promac, ...
+#include "functions\MOD\Include_Files.au3"

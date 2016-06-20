@@ -27,12 +27,8 @@
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
 ;~ Boost launch time by increasing process priority (will be restored again when finished launching)
-Local $iBotProcessPriority
-If $CmdLine[0] < 2 Then
-	$iBotProcessPriority = _ProcessGetPriority(@AutoItPID)
-	ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
-Endif
-
+Local $iBotProcessPriority = _ProcessGetPriority(@AutoItPID)
+ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 
 Global $iBotLaunchTime = 0
 Local $hBotLaunchTime = TimerInit()
@@ -207,9 +203,7 @@ $iBotLaunchTime = TimerDiff($hBotLaunchTime)
 SetDebugLog("MyBot.run launch time " & Round($iBotLaunchTime) & " ms.")
 
 ;~ Restore process priority
-If $aCmdLine[0] < 2 Then
-	ProcessSetPriority(@AutoItPID, $iBotProcessPriority)
-EndIF
+ProcessSetPriority(@AutoItPID, $iBotProcessPriority)
 
 ;AutoStart Bot if request
 AutoStart()
@@ -562,14 +556,13 @@ Func Attack() ;Selects which algorithm
 		If $debugsetlog=1 Then Setlog("start milking attack",$COLOR_RED)
 		Alogrithm_MilkingAttack()
 	Else
-		If $debugsetlog=1 Then
-			If ($iMatchMode = $DB and $iAtkAlgorithm[$DB] > 2) or ($iMatchMode = $LB and  $iAtkAlgorithm[$LB] > 1 ) Then
-				Setlog("Start Multi Finger Attack",$COLOR_RED)
-			Else
-				Setlog("Start standard attack",$COLOR_RED)
-			EndIf
+		If ($iMatchMode = $DB and $iAtkAlgorithm[$DB] > 2) or ($iMatchMode = $LB and  $iAtkAlgorithm[$LB] > 1 ) Then
+			If $debugsetlog=1 Then Setlog("Start Multi Finger Attack",$COLOR_RED)
+			algorithm_AtkTroops()
+		Else
+			If $debugsetlog=1 Then Setlog("Start standard attack",$COLOR_RED)
+			algorithm_AllTroops()
 		EndIf
-		algorithm_AllTroops()
 	EndIf
 	If $bADBTemp Then $AndroidAdbClicksEnabled = $bADBTemp
 EndFunc   ;==>Attack
