@@ -265,15 +265,11 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 							If $debug = True Then
 								Setlog("AttackClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ",#0666)")
 							Else
-								If ( $Android = "BlueStacks" ) Or ( $Android = "BlueStacks2" ) Then
-									PureClick($pixel[0], $pixel[1], $qty2, $delayPoint)
+								If $AndroidAdbClicksEnabled Then
+									; AttackClick($pixel[0], $pixel[1], $qty2, SetSleep(0), 0, "#0666") ; Fastest
+									AttackClick($pixel[0], $pixel[1], $qty2, Int($delayPoint/4), 0, "#0666")
 								Else
-									If $AndroidAdbClicksEnabled Then
-										; AttackClick($pixel[0], $pixel[1], $qty2, SetSleep(0), 0, "#0666") ; Fastest
-										AttackClick($pixel[0], $pixel[1], $qty2, Int($delayPoint/4), 0, "#0666")
-									Else
-										AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, 0, "#0666")
-									EndIf
+									AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, 0, "#0666")
 								EndIf
 							EndIf
 						Case $eKing

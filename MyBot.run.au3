@@ -78,7 +78,8 @@ Local $sModversion
 ; "1217" ; Pre-Train spells when army camps and spell factory are full - @MikeCoC
 ; "1218" ; Disable FastClicks when Attack using "CSV Fast Deployment"
 ; "1219" ; Add SplashScreen while loading MyBot - @MikeCoC
-$sModversion = "1220" ; Enable FastClicks while using "CSV Fast Deployment"
+; "1220" ; Enable FastClicks while using "CSV Fast Deployment"
+$sModversion = "1221" ; SplashScreen: Add Option to Disable It
 $sBotVersion = "v6.1.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".1.r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
