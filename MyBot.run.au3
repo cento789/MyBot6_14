@@ -79,9 +79,11 @@ Local $sModversion
 ; "1218" ; Disable FastClicks when Attack using "CSV Fast Deployment"
 ; "1219" ; Add SplashScreen while loading MyBot - @MikeCoC
 ; "1220" ; Enable FastClicks while using "CSV Fast Deployment"
-$sModversion = "1221" ; SplashScreen: Add Option to Disable It
-$sBotVersion = "v6.1.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
-$sBotTitle = "My Bot " & $sBotVersion & ".1.r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
+; "1221" ; SplashScreen: Add Option to Disable It
+; "1301" ; Upgrade to MyBot v6.1.3
+$sModversion = "1401" ; Upgrade to MyBot v6.1.4
+$sBotVersion = "v6.1.4" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
+$sBotTitle = "My Bot " & $sBotVersion & ".r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
 Global $sBotTitleDefault = $sBotTitle
 
