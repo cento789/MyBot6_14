@@ -172,7 +172,7 @@ Func _RemoteControlPushBullet()
 			EndIf
 		Next
 	EndIf
-	+	EndIf
+	EndIf
 	;add code for telegram
 	if $PushBulletEnabled2 = 1 then
 	;$access_token2 = $PushBulletToken2
@@ -591,7 +591,7 @@ Func PushMsgToPushBullet($Message, $Source = "")
 					_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,85, "Your Army Camps are now Full"))
 					$ichkAlertPBCampFullTest = 1
 				EndIf
-			EndIf
+			
 			EndIf
 	EndSwitch
 EndFunc   ;==>PushMsgToPushBullet
