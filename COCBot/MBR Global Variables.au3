@@ -352,7 +352,7 @@ Global $ScreenshotLootInfo = False
 Global $AlertSearch = True
 Global $iChkAttackNow, $iAttackNowDelay, $bBtnAttackNowPressed = False
 Global $PushBulletToken = ""
-Global $TelegramToken = ""
+Global $PushBulletToken2 = ""
 
 Global $iGUIMasterWidth = 470
 Global $iGUIMasterHeight = 650
