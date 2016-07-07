@@ -153,7 +153,7 @@ Func _RemoteControlPushBullet()
 						_DeleteMessageOfPushBullet($iden[$x])
 						SetLog("Your request has been received. Bot is now stopped", $COLOR_GREEN)
 						If $Runstate = True Then
-							_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,48, "Request to Stop") & "..." & "\n" & GetTranslated(620,49, "Your bot is now stopping") & "...")
+							_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,48, "Request to Stop") & "..." & "\n" & GetTranslated(620,49, "BOT is now stopping") & "...")
 							btnStop()
 						Else
 							_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,48, "Request to Stop") & "..." & "\n" & GetTranslated(620,50, "Your bot is currently stopped, no action was taken"))
@@ -202,7 +202,7 @@ Func _RemoteControlPushBullet()
 					case "\/START"
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 		                $oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "' & GetTranslated(18,48,"select your remote") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["' & GetTranslated(18,16,"Stop") & '\n\u23f9","' & GetTranslated(18,3,"Pause") & '\n\u23f8","' & GetTranslated(18,15,"Restart") & '\n\u21aa","' & GetTranslated(18,4,"Resume") & '\n\u25b6"],["' & GetTranslated(18,2,"Help") & '\n\u2753","' & GetTranslated(18,5,"Delete") & '\n\ud83d\udeae","' & GetTranslated(18,11,"Lastraid") & '\n\ud83d\udcd1","' & GetTranslated(18,13,"Stats") & '\n\ud83d\udcca"],["' & GetTranslated(18,14,"Screenshot") & '\n\ud83c\udfa6","' & GetTranslated(18,12,"Last raid txt") & '\n\ud83d\udcc4","' & GetTranslated(18,6,"Power") & '\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "' & GetTranslated(18,48,"BOT is now starting telegram") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["' & GetTranslated(18,16,"Stop") & '\n\u23f9","' & GetTranslated(18,3,"Pause") & '\n\u23f8","' & GetTranslated(18,15,"Restart") & '\n\u21aa","' & GetTranslated(18,4,"Resume") & '\n\u25b6"],["' & GetTranslated(18,2,"Help") & '\n\u2753","' & GetTranslated(18,5,"Delete") & '\n\ud83d\udeae","' & GetTranslated(18,11,"Lastraid") & '\n\ud83d\udcd1","' & GetTranslated(18,13,"Stats") & '\n\ud83d\udcca"],["' & GetTranslated(18,14,"Screenshot") & '\n\ud83c\udfa6","' & GetTranslated(18,12,"Last raid txt") & '\n\ud83d\udcc4","' & GetTranslated(18,6,"Power") & '\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 					Case GetTranslated(18,2,"Help") & "\N\U2753"
 						 Local $txtHelp =  GetTranslated(18,17,"You can remotely control your bot by selecting this key")
@@ -302,7 +302,7 @@ Func _RemoteControlPushBullet()
 					Case GetTranslated(18,16,"Stop") & "\N\U23F9"
 						SetLog("Telegram: Your request has been received. Bot is now stopped", $COLOR_GREEN)
 						If $Runstate = True Then
-						 _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(18,43,"Request to Stop...") & "\n" & GetTranslated(18,44,"Your bot is now stopping..."))
+						 _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(18,43,"Request to Stop...") & "\n" & GetTranslated(18,44,"BOT is now stopping..."))
 						 btnStop()
 						Else
 						 _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(18,43,"Request to Stop...") & "\n" & GetTranslated(18,45,"Your bot is currently stopped, no action was taken"))
@@ -420,7 +420,7 @@ Func Getchatid()
 		$chat_id2 = _Arraypop($chat_id)
 		$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 		$oHTTP.SetRequestHeader("Content-Type", "application/json")
-		local $ppush3 = '{"text": "' & GetTranslated(18,48,"select your remote") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'\n\u23f9","'&GetTranslated(18,3,"Pause")&'\n\u23f8","'&GetTranslated(18,15,"Restart")&'\n\u21aa","'&GetTranslated(18,4,"Resume")&'\n\u25b6"],["'&GetTranslated(18,2,"Help")&'\n\u2753","'&GetTranslated(18,5,"Delete")&'\n\ud83d\udeae","'&GetTranslated(18,11,"Lastraid")&'\n\ud83d\udcd1","'&GetTranslated(18,13,"Stats")&'\n\ud83d\udcca"],["'&GetTranslated(18,14,"Screenshot")&'\n\ud83c\udfa6","'&GetTranslated(18,12,"Last raid txt")&'\n\ud83d\udcc4","'&GetTranslated(18,6,"Power")&'\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+		local $ppush3 = '{"text": "' & GetTranslated(18,48,"BOT is now starting telegram") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'\n\u23f9","'&GetTranslated(18,3,"Pause")&'\n\u23f8","'&GetTranslated(18,15,"Restart")&'\n\u21aa","'&GetTranslated(18,4,"Resume")&'\n\u25b6"],["'&GetTranslated(18,2,"Help")&'\n\u2753","'&GetTranslated(18,5,"Delete")&'\n\ud83d\udeae","'&GetTranslated(18,11,"Lastraid")&'\n\ud83d\udcd1","'&GetTranslated(18,13,"Stats")&'\n\ud83d\udcca"],["'&GetTranslated(18,14,"Screenshot")&'\n\ud83c\udfa6","'&GetTranslated(18,12,"Last raid txt")&'\n\ud83d\udcc4","'&GetTranslated(18,6,"Power")&'\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 		$oHTTP.Send($pPush3)
 EndFunc   ;==>Getchatid
 
@@ -547,7 +547,7 @@ Func PushMsgToPushBullet($Message, $Source = "")
 			If ($PushBulletEnabled = 1 or $PushBulletEnabled2 = 1) And $pTakeAbreak = 1 Then _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,67, "Chief, we need some rest!") & "\n" & GetTranslated(620,68, "Village must take a break.."))
 		;msg when MyBot closing
 		Case "StopMyBot" 
-			If ($PushBulletEnabled = 1 or $PushBulletEnabled2 = 1) And $pStop = 1 Then _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,86, "Your BOT is now stopping"))
+			If ($PushBulletEnabled = 1 or $PushBulletEnabled2 = 1) And $pStop = 1 Then _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,86, "BOT is now stopping"))
 		Case "CocError"
 			If ($PushBulletEnabled = 1 or $PushBulletEnabled2 = 1) And $pOOS = 1 Then _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,69, "CoC Has Stopped Error") & ".....")
 		Case "Pause"
