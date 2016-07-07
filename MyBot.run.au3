@@ -82,7 +82,9 @@ Local $sModversion
 ; "1221" ; SplashScreen: Add Option to Disable It
 ; "1301" ; Upgrade to MyBot v6.1.3
 ; "1401" ; Upgrade to MyBot v6.1.4
-$sModversion = "1402" ; Update Logo, Train Big First
+; "1402" ; Update Logo, Train Big First
+; "1403" ; Update for Pre-Train spells
+$sModversion = "1404" ; Remove Pre-Train spells
 $sBotVersion = "v6.1.4" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".r" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
