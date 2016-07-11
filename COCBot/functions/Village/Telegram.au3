@@ -34,9 +34,9 @@ Func _RemoteControlTelegram()
 
 	;Setlog("start processing telegram message.",$COLOR_GREEN) for debugging
 	
-	If $PushBulletEnabled2 = 0 Or $pRemote = 0 Then Return
+	If $TelegramEnabled = 0 Or $pRemote = 0 Then Return
 	;add code for telegram
-	if $PushBulletEnabled2 = 1 then
+	if $TelegramEnabled = 1 then
 	;$access_token2 = $PushBulletToken2
 	  $oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 	  $url= "https://api.telegram.org/bot"
@@ -208,8 +208,8 @@ EndFunc   ;==>_RemoteControl
 
 Func _Telegram($pMessage = "")
 
-	If ($PushBulletEnabled2 = 0 Or $PushBulletToken2 = "") Then Return
-	if $PushBulletEnabled2 = 1 then 
+	If ($TelegramEnabled = 0 Or $PushBulletToken2 = "") Then Return
+	if $TelegramEnabled = 1 then 
 	$access_token2 = $PushBulletToken2
 		 $oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 		 $oHTTP.Open("Get", "https://api.telegram.org/bot" & $access_token2 & "/getupdates" , False)
@@ -227,8 +227,8 @@ Func _Telegram($pMessage = "")
 EndFunc   ;==>_PushBullet
 
 Func _PushToPushTelegram($pMessage)
-	If $PushBulletEnabled2 = 0 Or $PushBulletToken2 = "" Then Return
-	if $PushBulletEnabled2 = 1 then
+	If $TelegramEnabled = 0 Or $PushBulletToken2 = "" Then Return
+	if $TelegramEnabled = 1 then
 			$access_token2 = $PushBulletToken2
 			$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 			$url= "https://api.telegram.org/bot"
@@ -242,7 +242,7 @@ Func _PushToPushTelegram($pMessage)
 EndFunc   ;==>_Push
 
 Func Getchatid()
-    If $PushBulletEnabled2 = 0 Or $PushBulletToken2= "" Then Return
+    If $TelegramEnabled = 0 Or $PushBulletToken2= "" Then Return
 		$access_token2 = $PushBulletToken2
 		$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 		$oHTTP.Open("Get", "https://api.telegram.org/bot" & $access_token2 & "/getupdates" , False)
@@ -257,8 +257,8 @@ Func Getchatid()
 EndFunc   ;==>Getchatid
 
 Func _PushFileToTelegram($File, $Folder, $FileType, $body)
-	If $PushBulletEnabled2 = 0 Or $PushBulletToken2 ="" Then Return
-	if $PushBulletEnabled2 = 1 then
+	If $TelegramEnabled = 0 Or $PushBulletToken2 ="" Then Return
+	if $TelegramEnabled = 1 then
 	If FileExists($sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File) Then
 			$access_token2 = $PushBulletToken2
 			$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
@@ -276,20 +276,20 @@ Func _PushFileToTelegram($File, $Folder, $FileType, $body)
 EndFunc   ;==>_PushFile
 
 Func PushMsgToTelegram($Message, $Source = "")
-	if $PushBulletEnabled2 = 0 then return
+	if $TelegramEnabled = 0 then return
 	Local $hBitmap_Scaled
 	Switch $Message
 		Case "Restarted"
-			If ($PushBulletEnabled2 = 1 And $pRemote = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,56, "Bot restarted"))
+			If ($TelegramEnabled = 1 And $pRemote = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,56, "Bot restarted"))
 		Case "OutOfSync"
-			If ($PushBulletEnabled2 = 1 And $pOOS = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,57, "Restarted after Out of Sync Error") & "\n" & GetTranslated(620,58, "Attacking now") & "...")
+			If ($TelegramEnabled = 1 And $pOOS = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,57, "Restarted after Out of Sync Error") & "\n" & GetTranslated(620,58, "Attacking now") & "...")
 		Case "LastRaid"
-			If ($PushBulletEnabled2 = 1 And $iAlertPBLastRaidTxt = 1) Then
+			If ($TelegramEnabled = 1 And $iAlertPBLastRaidTxt = 1) Then
 				_PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,34,"Last Raid txt") & "\n" & " \n[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldLast) & " \n[" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($iElixirLast) & " \n[" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($iDarkLast) & " \n[" & GetTranslated(620,38, "T") & "]: " & $iTrophyLast)
 				If _Sleep($iDelayPushMsg1) Then Return
 				SetLog("Telegram: Last Raid Text has been sent!", $COLOR_GREEN)
 			EndIf
-			If ($PushBulletEnabled2 = 1 And $pLastRaidImg = 1) Then
+			If ($TelegramEnabled = 1 And $pLastRaidImg = 1) Then
 				_CaptureRegion(0, 0, $DEFAULT_WIDTH, $DEFAULT_HEIGHT - 45)
 				;create a temporary file to send with telegram...
 				Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
@@ -311,38 +311,38 @@ Func PushMsgToTelegram($Message, $Source = "")
 				If Not ($iDelete) Then SetLog("Telegram: An error occurred deleting temporary screenshot file.", $COLOR_RED)
 			EndIf
 		Case "FoundWalls"
-			If ($PushBulletEnabled2 = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,60, "Found Wall level") & " " & $icmbWalls + 4 & "\n" & " " & GetTranslated(620,61, "Wall segment has been located") & "...\n" & GetTranslated(620,62, "Upgrading") & "...")
+			If ($TelegramEnabled = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,60, "Found Wall level") & " " & $icmbWalls + 4 & "\n" & " " & GetTranslated(620,61, "Wall segment has been located") & "...\n" & GetTranslated(620,62, "Upgrading") & "...")
 		Case "SkypWalls"
-			If ($PushBulletEnabled2 = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,63, "Cannot find Wall level") & $icmbWalls + 4 & "\n" & GetTranslated(620,64, "Skip upgrade") & "...")
+			If ($TelegramEnabled = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,63, "Cannot find Wall level") & $icmbWalls + 4 & "\n" & GetTranslated(620,64, "Skip upgrade") & "...")
 		Case "AnotherDevice3600"
-			If ($PushBulletEnabled2 = 1 And $pAnotherDevice = 1) Then _PushToPushTelegram($iOrigPushBullet & " | 1. " & GetTranslated(620,65, "Another Device has connected") & "\n" & GetTranslated(620,66, "Another Device has connected, waiting") & " " & Floor(Floor($sTimeWakeUp / 60) / 60) & " " & GetTranslated(603,14, "Hours") & " " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " " & GetTranslated(603,9, "minutes") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603,8, "seconds"))
+			If ($TelegramEnabled = 1 And $pAnotherDevice = 1) Then _PushToPushTelegram($iOrigPushBullet & " | 1. " & GetTranslated(620,65, "Another Device has connected") & "\n" & GetTranslated(620,66, "Another Device has connected, waiting") & " " & Floor(Floor($sTimeWakeUp / 60) / 60) & " " & GetTranslated(603,14, "Hours") & " " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " " & GetTranslated(603,9, "minutes") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603,8, "seconds"))
 		Case "AnotherDevice60"
-			If ($PushBulletEnabled2 = 1 And $pAnotherDevice = 1) Then _PushToPushTelegram($iOrigPushBullet & " | 2. " & GetTranslated(620,65, "Another Device has connected") & "\n" & GetTranslated(620,66, "Another Device has connected, waiting") & " " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " " & GetTranslated(603,9, "minutes") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603,8, "seconds"))
+			If ($TelegramEnabled = 1 And $pAnotherDevice = 1) Then _PushToPushTelegram($iOrigPushBullet & " | 2. " & GetTranslated(620,65, "Another Device has connected") & "\n" & GetTranslated(620,66, "Another Device has connected, waiting") & " " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " " & GetTranslated(603,9, "minutes") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603,8, "seconds"))
 		Case "AnotherDevice"
-			If ($PushBulletEnabled2 = 1 And $pAnotherDevice = 1) Then _PushToPushTelegram($iOrigPushBullet & " | 3. " & GetTranslated(620,65, "Another Device has connected") & "\n" & GetTranslated(620,66, "Another Device has connected, waiting") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603,8, "seconds"))
+			If ($TelegramEnabled = 1 And $pAnotherDevice = 1) Then _PushToPushTelegram($iOrigPushBullet & " | 3. " & GetTranslated(620,65, "Another Device has connected") & "\n" & GetTranslated(620,66, "Another Device has connected, waiting") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603,8, "seconds"))
 		Case "TakeBreak"
-			If ($PushBulletEnabled2 = 1 And $pTakeAbreak = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,67, "Chief, we need some rest!") & "\n" & GetTranslated(620,68, "Village must take a break.."))
+			If ($TelegramEnabled = 1 And $pTakeAbreak = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,67, "Chief, we need some rest!") & "\n" & GetTranslated(620,68, "Village must take a break.."))
 		;msg when MyBot closing
 		Case "StopMyBot" 
-			If ($PushBulletEnabled2 = 1 And $pStop = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,86, "BOT is now closing"))
+			If ($TelegramEnabled = 1 And $pStop = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,86, "BOT is now closing"))
 		Case "CocError"
-			If ($PushBulletEnabled2 = 1 And $pOOS = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,69, "CoC Has Stopped Error") & ".....")
+			If ($TelegramEnabled = 1 And $pOOS = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,69, "CoC Has Stopped Error") & ".....")
 		Case "Pause"
-			If ($PushBulletEnabled2 = 1 And $pRemote = 1) And $Source = "Push" Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,70, "Request to Pause") & "..." & "\n" & GetTranslated(620,71, "Your request has been received. Bot is now paused"))
+			If ($TelegramEnabled = 1 And $pRemote = 1) And $Source = "Push" Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,70, "Request to Pause") & "..." & "\n" & GetTranslated(620,71, "Your request has been received. Bot is now paused"))
 		Case "Resume"
-			If ($PushBulletEnabled2 = 1 And $pRemote = 1) And $Source = "Push" Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,72, "Request to Resume") & "..." & "\n" & GetTranslated(620,73, "Your request has been received. Bot is now resumed"))
+			If ($TelegramEnabled = 1 And $pRemote = 1) And $Source = "Push" Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,72, "Request to Resume") & "..." & "\n" & GetTranslated(620,73, "Your request has been received. Bot is now resumed"))
 		Case "OoSResources"
-			If ($PushBulletEnabled2 = 1 And $pOOS = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,74, "Disconnected after") & " " & StringFormat("%3s", $SearchCount) & " " & GetTranslated(620,75, "skip(s)") & "\n" & GetTranslated(620,76, "Cannot locate Next button, Restarting Bot") & "...")
+			If ($TelegramEnabled = 1 And $pOOS = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,74, "Disconnected after") & " " & StringFormat("%3s", $SearchCount) & " " & GetTranslated(620,75, "skip(s)") & "\n" & GetTranslated(620,76, "Cannot locate Next button, Restarting Bot") & "...")
 		Case "MatchFound"
-			If ($PushBulletEnabled2 = 1 And $pMatchFound = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & $sModeText[$iMatchMode] & " " & GetTranslated(620,89, "Match Found! after") & " " & StringFormat("%3s", $SearchCount) & " " & GetTranslated(620,75, "skip(s)") & "\n" & "\n[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($searchGold) & "; \n[" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($searchElixir) & "; \n[" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($searchDark) & "; \n[" & GetTranslated(620,38, "T") & "]: " & $searchTrophy)
+			If ($TelegramEnabled = 1 And $pMatchFound = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & $sModeText[$iMatchMode] & " " & GetTranslated(620,89, "Match Found! after") & " " & StringFormat("%3s", $SearchCount) & " " & GetTranslated(620,75, "skip(s)") & "\n" & "\n[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($searchGold) & "; \n[" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($searchElixir) & "; \n[" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($searchDark) & "; \n[" & GetTranslated(620,38, "T") & "]: " & $searchTrophy)
 		Case "UpgradeWithGold"
-			If ($PushBulletEnabled2 = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,77, "Upgrade completed by using GOLD") & "\n" & GetTranslated(620,78, "Complete by using GOLD") & "...")
+			If ($TelegramEnabled = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,77, "Upgrade completed by using GOLD") & "\n" & GetTranslated(620,78, "Complete by using GOLD") & "...")
 		Case "UpgradeWithElixir"
-			If ($PushBulletEnabled2 = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,79, "Upgrade completed by using ELIXIR") & "\n" & GetTranslated(620,80, "Complete by using ELIXIR") & "...")
+			If ($TelegramEnabled = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,79, "Upgrade completed by using ELIXIR") & "\n" & GetTranslated(620,80, "Complete by using ELIXIR") & "...")
 		Case "NoUpgradeWallButton"
-			If ($PushBulletEnabled2 = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,81, "No Upgrade Gold Button") & "\n" & GetTranslated(620,81, "Cannot find gold upgrade button") & "...")
+			If ($TelegramEnabled = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,81, "No Upgrade Gold Button") & "\n" & GetTranslated(620,81, "Cannot find gold upgrade button") & "...")
 		Case "NoUpgradeElixirButton"
-			If ($PushBulletEnabled2 = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,82, "No Upgrade Elixir Button") & "\n" & GetTranslated(620,83, "Cannot find elixir upgrade button") & "...")
+			If ($TelegramEnabled = 1 And $pWallUpgrade = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,82, "No Upgrade Elixir Button") & "\n" & GetTranslated(620,83, "Cannot find elixir upgrade button") & "...")
 		Case "RequestScreenshot"
 			Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
 			Local $Time = @HOUR & "." & @MIN
@@ -363,7 +363,7 @@ Func PushMsgToTelegram($Message, $Source = "")
 			SetLog("PushBullet: All messages deleted.", $COLOR_GREEN)
 			$iDeleteAllPBPushesNow = False ; reset value
 		Case "CampFull"
-			If ($PushBulletEnabled2 = 1 And $ichkAlertPBCampFull = 1) Then
+			If ($TelegramEnabled = 1 And $ichkAlertPBCampFull = 1) Then
 				If $ichkAlertPBCampFullTest = 0 Then
 					_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,85, "Your Army Camps are now Full"))
 					$ichkAlertPBCampFullTest = 1
