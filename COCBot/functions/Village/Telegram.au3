@@ -325,6 +325,12 @@ Func PushMsgToTelegram($Message, $Source = "")
 		;msg when MyBot closing
 		Case "StopMyBot" 
 			If ($TelegramEnabled = 1 And $pStop = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,86, "BOT is now closing"))
+		Case "CAMPSTATUS"
+			If $CampStatus <> "" Then
+				_PushToPushTelegram($iOrigPushBullet & " :\n" & $CampStatus)
+			Else
+				_PushToPushTelegram($iOrigPushBullet & " :\n" & "Camp Status need refresh,Try again after minutes.")
+			EndIf
 		Case "CocError"
 			If ($TelegramEnabled = 1 And $pOOS = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,69, "CoC Has Stopped Error") & ".....")
 		Case "Pause"
@@ -365,7 +371,7 @@ Func PushMsgToTelegram($Message, $Source = "")
 		Case "CampFull"
 			If ($TelegramEnabled = 1 And $ichkAlertPBCampFull = 1) Then
 				If $ichkAlertPBCampFullTest = 0 Then
-					_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,85, "Your Army Camps are now Full"))
+					_PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,85, "Your Army Camps are now Full"))
 					$ichkAlertPBCampFullTest = 1
 				EndIf
 			
