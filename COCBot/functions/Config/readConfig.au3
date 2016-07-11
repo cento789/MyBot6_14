@@ -611,7 +611,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 
 		IniReadS($PushBulletEnabled, $config, "pushbullet", "PBEnabled", "0")
 		;load var telegram
-		IniReadS($PushBulletEnabled2, $config, "pushbullet", "PBEnabled2", "0")
+		IniReadS($TelegramEnabled, $config, "pushbullet", "PBEnabled2", "0")
 		IniReadS($pRemote, $config, "pushbullet", "PBRemote", "0")
 		IniReadS($iDeleteAllPBPushes, $config, "pushbullet", "DeleteAllPBPushes", "0")
 		IniReadS($pMatchFound, $config, "pushbullet", "AlertPBVMFound", "0")

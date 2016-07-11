@@ -1438,10 +1438,10 @@ EndIf
 		chkPBenabled()
 	EndIf
 	
-	If $PushBulletEnabled2 = 1 Then
+	If $TelegramEnabled = 1 Then
 		GUICtrlSetState($chkPBenabled2, $GUI_CHECKED)
 		chkPBenabled()
-	ElseIf $PushBulletEnabled2 = 0 Then
+	ElseIf $TelegramEnabled = 0 Then
 		GUICtrlSetState($chkPBenabled2, $GUI_UNCHECKED)
 		chkPBenabled()
 	EndIf

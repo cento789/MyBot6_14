@@ -285,9 +285,9 @@ Func saveConfig() ;Saves the controls settings to the config
 	EndIf
 	
 	If GUICtrlRead($chkPBenabled2) = $GUI_CHECKED Then
-		$PushBulletEnabled2 = 1
+		$TelegramEnabled = 1
 	Else
-		$PushBulletEnabled2 = 0
+		$TelegramEnabled = 0
 	EndIf
 	
 	If GUICtrlRead($chkPBRemote) = $GUI_CHECKED Then
@@ -2001,7 +2001,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "pushbullet", "AccountToken2", $PushBulletToken2)
 	IniWriteS($config, "pushbullet", "OrigPushBullet", $iOrigPushBullet)
 	IniWriteS($config, "pushbullet", "PBEnabled", $PushBulletEnabled)
-	IniWriteS($config, "pushbullet", "PBEnabled2", $PushBulletEnabled2)
+	IniWriteS($config, "pushbullet", "PBEnabled2", $TelegramEnabled)
 	IniWriteS($config, "pushbullet", "PBRemote", $pRemote)
 	IniWriteS($config, "pushbullet", "DeleteAllPBPushes", $iDeleteAllPBPushes)
 	IniWriteS($config, "pushbullet", "DeleteOldPBPushes", $ichkDeleteOldPBPushes)
