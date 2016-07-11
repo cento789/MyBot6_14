@@ -386,7 +386,7 @@ Global $iLastAttackPB
 Global $iAlertPBVillage
 Global $PushBulletEnabled
 Global $pRemote
-Global $PushBulletEnabled2
+Global $TelegramEnabled
 Global $pMatchFound
 Global $pLastRaidImg
 Global $iAlertPBLastRaidTxt
