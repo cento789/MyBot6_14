@@ -164,7 +164,7 @@ Func _RemoteControlTelegram()
 					Case GetTranslated(18,16,"Stop") & "\N\U23F9"
 						SetLog("Telegram: Your request has been received. Bot is now stopped", $COLOR_GREEN)
 						If $Runstate = True Then
-						 _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,43,"Request to Stop...") & "\n" & GetTranslated(18,44,"BOT is now stopping..."))
+						 _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,43,"Request to Stop...") & "\n" & GetTranslated(18,44,"BOT is now closing..."))
 						 btnStop()
 						Else
 						 _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,43,"Request to Stop...") & "\n" & GetTranslated(18,45,"Your bot is currently stopped, no action was taken"))
@@ -324,7 +324,7 @@ Func PushMsgToTelegram($Message, $Source = "")
 			If ($PushBulletEnabled2 = 1 And $pTakeAbreak = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,67, "Chief, we need some rest!") & "\n" & GetTranslated(620,68, "Village must take a break.."))
 		;msg when MyBot closing
 		Case "StopMyBot" 
-			If ($PushBulletEnabled2 = 1 And $pStop = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,86, "BOT is now stopping"))
+			If ($PushBulletEnabled2 = 1 And $pStop = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,86, "BOT is now closing"))
 		Case "CocError"
 			If ($PushBulletEnabled2 = 1 And $pOOS = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,69, "CoC Has Stopped Error") & ".....")
 		Case "Pause"
