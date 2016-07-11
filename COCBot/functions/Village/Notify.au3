@@ -14,12 +14,26 @@
 ; ===============================================================================================================================
 
 Func _RemoteControl()
-	If ($PushBulletEnabled = 0 and $PushBulletEnabled2 = 0) Then Return
-	If $pRemote = 1 Then _RemoteControlPushBullet()
+	If ($PushBulletEnabled = 0 And $PushBulletEnabled2 = 0) Then Return
+	If ($PushBulletEnabled = 1 And $pRemote = 1) Then _RemoteControlPushBullet()
+	If ($PushBulletEnabled2 = 1 And $pRemote = 1) Then _RemoteControlTelegram()
 EndFunc   ;==>_RemoteControl
 
 Func ReportNotify()
-	If ($PushBulletEnabled = 0 and $PushBulletEnabled2 = 0) Then Return
+
+	If $PushBulletEnabled2 = 1 Then
+	If $iAlertPBVillage = 1 Then
+		_Telegram($iOrigPushBullet & " | My Village:" & "\n" & " \n[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldCurrent) & " \n[" & GetTranslated(620,36, "E") & "]:  " & _NumberFormat($iElixirCurrent) & " \n[" & GetTranslated(620,37, "D") & "]:  " & _NumberFormat($iDarkCurrent) & " \n[" & GetTranslated(620,38, "T") & "]:  " & _NumberFormat($iTrophyCurrent) & " \n[" & GetTranslated(620,42, "No. of Free Builders") & "]: " & _NumberFormat($iFreeBuilderCount))
+	EndIf
+	If $iLastAttackPB = 1 Then
+		If Not ($iGoldLast = "" And $iElixirLast = "") Then _Telegram($iOrigPushBullet & " | Last Gain :" & "\n" & " \n[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldLast) & " \n[" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($iElixirLast) & " \n[" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($iDarkLast) & " \n[" & GetTranslated(620,38, "T") & "]: " & _NumberFormat($iTrophyLast))
+	EndIf
+	If _Sleep($iDelayReportPushBullet1) Then Return
+	checkMainScreen(False)
+	EndIf
+	;Telegram
+	
+	If $PushBulletEnabled = 1 Then
 	If $iAlertPBVillage = 1 Then
 		_PushBullet($iOrigPushBullet & " | My Village:" & "\n" & " [" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldCurrent) & " [" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($iElixirCurrent) & " [" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($iDarkCurrent) & "  [" & GetTranslated(620,38, "T") & "]: " & _NumberFormat($iTrophyCurrent) & " [" & GetTranslated(620,42, "No. of Free Builders") & "]: " & _NumberFormat($iFreeBuilderCount))
 	EndIf
@@ -28,7 +42,8 @@ Func ReportNotify()
 	EndIf
 	If _Sleep($iDelayReportPushBullet1) Then Return
 	checkMainScreen(False)
-EndFunc   ;==>Report
+	Endif
+EndFunc   ;==>Report 
 
 Func _DeletePush()
 	If $PushBulletEnabled = 0 Then Return
@@ -37,8 +52,12 @@ Func _DeletePush()
 EndFunc   ;==>_DeletePush
 
 Func PushMsg($Message, $Source = "")
-	If ($PushBulletEnabled = 0 and $PushBulletEnabled2 = 0) Then Return
-		PushMsgToPushBullet($Message, $Source)
+	If $PushBulletEnabled2 = 1 Then
+		PushMsgToTelegram($Message, $Source)
+		Endif
+	If $PushBulletEnabled = 1 Then
+		PushMsgToPushBullet($Message, $Source)	
+		Endif
 EndFunc   ;==>PushMsg
 
 Func _DeleteOldPushes()
