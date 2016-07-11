@@ -14,7 +14,8 @@
 ; ===============================================================================================================================
 
 Func PushBulletRemoteControl()
-	If ($PushBulletEnabled or $PushBulletEnabled2) And $pRemote Then _RemoteControl()
+	;If ($PushBulletEnabled or $PushBulletEnabled2) And $pRemote Then 
+	_RemoteControl()
 EndFunc   ;==>PushBulletRemoteControl
 
 Func PushBulletDeleteOldPushes()
