@@ -14,7 +14,7 @@
 ; ===============================================================================================================================
 
 Func PushBulletRemoteControl()
-	;If ($PushBulletEnabled or $PushBulletEnabled2) And $pRemote Then 
+	;If ($PushBulletEnabled or $TelegramEnabled) And $pRemote Then 
 	_RemoteControl()
 EndFunc   ;==>PushBulletRemoteControl
 
@@ -73,7 +73,7 @@ EndFunc   ;==>chkPBenabled
 
 Func chkPBenabled2()
 	If GUICtrlRead($chkPBenabled2) = $GUI_CHECKED Then
-		$PushBulletEnabled2 = 1
+		$TelegramEnabled = 1
 		GUICtrlSetState($PushBulletTokenValue2, $GUI_ENABLE)
 		GUICtrlSetState($chkPBRemote, $GUI_ENABLE)
 		GUICtrlSetState($OrigPushBullet, $GUI_ENABLE)
@@ -88,7 +88,7 @@ Func chkPBenabled2()
 		GUICtrlSetState($chkAlertPBOtherDevice, $GUI_ENABLE)
 		GUICtrlSetState($chkAlertPBCampFull, $GUI_ENABLE)
    Else
-	    $PushBulletEnabled2 = 0
+	    $TelegramEnabled = 0
 	    GUICtrlSetState($PushBulletTokenValue2, $GUI_DISABLE)
 		If $PushBulletEnabled = 0 Then
 		 GUICtrlSetState($chkPBRemote, $GUI_DISABLE)
