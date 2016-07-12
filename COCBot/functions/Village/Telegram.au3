@@ -64,10 +64,10 @@ Func _RemoteControlTelegram()
 					case "\/START"
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 		                $oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "' & GetTranslated(18,48,"BOT is now starting telegram") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["' & GetTranslated(18,16,"Stop") & '\n\u23f9","' & GetTranslated(18,3,"Pause") & '\n\u23f8","' & GetTranslated(18,15,"Restart") & '\n\u21aa","' & GetTranslated(18,4,"Resume") & '\n\u25b6"],["' & GetTranslated(18,2,"Help") & '\n\u2753","' & GetTranslated(18,5,"Delete") & '\n\ud83d\udeae","' & GetTranslated(18,11,"Lastraid") & '\n\ud83d\udcd1","' & GetTranslated(18,13,"Stats") & '\n\ud83d\udcca"],["' & GetTranslated(18,14,"Screenshot") & '\n\ud83c\udfa6","' & GetTranslated(18,12,"Last raid txt") & '\n\ud83d\udcc4","' & GetTranslated(18,6,"Power") & '\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "' & GetTranslated(18,48,"BOT is now starting telegram") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["' & GetTranslated(18,16,"Stop") & '","' & GetTranslated(18,3,"Pause") & '","' & GetTranslated(18,15,"Restart") & '","' & GetTranslated(18,4,"Resume") & '"],["' & GetTranslated(18,2,"Help") & '","' & GetTranslated(18,5,"Delete") & '","' & GetTranslated(18,11,"Lastraid") & '","' & GetTranslated(18,13,"Stats") & '\n\ud83d\udcca"],["' & GetTranslated(18,14,"Screenshot") & '","' & GetTranslated(18,12,"Last raid txt") & '\n\ud83d\udcc4","' & GetTranslated(18,103,"Camp") & '","' & GetTranslated(18,6,"Power") & '"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 					Case GetTranslated(18,2,"Help") & "\N\U2753"
-						 Local $txtHelp =  GetTranslated(18,17,"You can remotely control your bot by selecting this key")
+						Local $txtHelp =  GetTranslated(18,17,"You can remotely control your bot by selecting this key")
 						$txtHelp &= "\n" & GetTranslated(18,18,"HELP - send this help message")
 						$txtHelp &= "\n" & GetTranslated(18,19,"DELETE  - Use this if Remote dont respond to your request")
 						$txtHelp &= "\n" & GetTranslated(18,20,"RESTART - restart the bot and bluestacks")
@@ -79,26 +79,33 @@ Func _RemoteControlTelegram()
 						$txtHelp &= "\n" & GetTranslated(18,25,"LASTRAID - send the last raid loot screenshot. you should check Take Loot snapshot in End Battle Tab ")
 						$txtHelp &= "\n" & GetTranslated(18,26,"LASTRAIDTXT - send the last raid loot values")
 						$txtHelp &= "\n" & GetTranslated(18,27,"SCREENSHOT - send a screenshot")
-						$txtHelp &= "\n" & GetTranslated(18,28,"POWER - select powr option")
+						$txtHelp &= "\n" & GetTranslated(18,28,"POWER - select power option")
+						$txtHelp &= "\n" & GetTranslated(18,102,"CAMP - send Camp Status")
 						$txtHelp &= "\n"
-						$txtHelp &= "\n" & GetTranslated(18,101,"Send and recieve chats via Telegram. Use GETCHATS <interval|NOW|STOP> to get the latest clan chat as an image, and SENDCHAT <chat message> to send a chat to your clan")
+						$txtHelp &= "\n" & GetTranslated(18,101,"Send and receive chats via Telegram. Use GETCHATS <interval|NOW|STOP> to get the latest clan chat as an image, and SENDCHAT <chat message> to send a chat to your clan")
 						_PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,29,"Request for Help") & "\n" & $txtHelp)
 						SetLog("Telegram: Your request has been received from ' " & $iOrigPushBullet & ". Help has been sent", $COLOR_GREEN)
-					Case GetTranslated(18,3,"Pause") & "\N\U23F8"
+					Case GetTranslated(18,103,"Camp")
+						If ($TelegramEnabled = 1 And $CampStatus <> "") Then
+						_PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,104,"Camp Status") & ":\n" & "\n" & $CampStatus)
+						Else
+						_PushToPushTelegram($iOrigPushBullet & " :\n" & "Camp Status need refresh,Try again after minutes.")
+						EndIf
+					Case GetTranslated(18,3,"Pause")
 						If $TPaused = False And $Runstate = True Then
 						 TogglePauseImpl("Push")
 						Else
 						 SetLog("Telegram: Your bot is currently paused, no action was taken", $COLOR_GREEN)
 					 _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,30,"Request to Pause") & "\n" & GetTranslated(18,93,"Your bot is currently paused, no action was taken"))
 						EndIf
-					Case GetTranslated(18,4,"Resume") & "\N\U25B6"
+					Case GetTranslated(18,4,"Resume")
 						If $TPaused = True And $Runstate = True Then
 						 TogglePauseImpl("Push")
 						Else
 						 SetLog("Telegram: Your bot is currently resumed, no action was taken", $COLOR_GREEN)
 						 _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,31,"Request to Resume") & "\n" & GetTranslated(18,94,"Your bot is currently resumed, no action was taken"))
 						EndIf
-					Case GetTranslated(18,5,"Delete") & "\N\UD83D\UDEAE"
+					Case GetTranslated(18,5,"Delete")
 		                $oHTTP.Open("Get", $url & $access_token2 & "/getupdates?offset=" & $lastuid  , False)
 	                    $oHTTP.Send()
 					SetLog("Telegram: Your request has been received.", $COLOR_GREEN)
@@ -107,61 +114,61 @@ Func _RemoteControlTelegram()
 						;_PushFile2($sLogFName, "logs", "text/plain; charset=utf-8", $iOrigPushBullet & " | Current Log " & "\n")
 						;_PushFile2($sLogFName, "logs", "application\/octet-stream", $iOrigPushBullet & " | Current Log " & "\n")
 						;_PushFile2($sLogFName, "logs", "application/octet-stream", $iOrigPushBullet & " | Current Log " & "\n")
-					Case GetTranslated(18,6,"Power") & "\N\Ud83D\UDDA5"
+					Case GetTranslated(18,6,"Power")
 						SetLog("Telegram: Your request has been received from " & $iOrigPushBullet & ". POWER option now sent", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 		                $oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "' & GetTranslated(18,49,"select POWER option") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,7,"Hibernate")&'\n\u26a0\ufe0f","'&GetTranslated(18,8,"Shut down")&'\n\u26a0\ufe0f","'&GetTranslated(18,9,"Standby")&'\n\u26a0\ufe0f"],["'&GetTranslated(18,10,"Cancel")&'"]],"one_time_keyboard": true,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "' & GetTranslated(18,49,"select POWER option") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,7,"Hibernate")&'","'&GetTranslated(18,8,"Shut down")&'","'&GetTranslated(18,9,"Standby")&'"],["'&GetTranslated(18,10,"Cancel")&'"]],"one_time_keyboard": true,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
-					Case GetTranslated(18,7,"Hibernate") & "\N\U26A0\UFE0F"
+					Case GetTranslated(18,7,"Hibernate")
 						SetLog("Telegram: Your request has been received from " & $iOrigPushBullet & ". Hibernate PC", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "' & GetTranslated(18,50,"PC got Hibernate") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'\n\u23f9","'&GetTranslated(18,3,"Pause")&'\n\u23f8","'&GetTranslated(18,15,"Restart")&'\n\u21aa","'&GetTranslated(18,4,"Resume")&'\n\u25b6"],["'&GetTranslated(18,2,"Help")&'\n\u2753","'&GetTranslated(18,5,"Delete")&'\n\ud83d\udeae","'&GetTranslated(18,11,"Lastraid")&'\n\ud83d\udcd1","'&GetTranslated(18,13,"Stats")&'\n\ud83d\udcca"],["'&GetTranslated(18,14,"Screenshot")&'\n\ud83c\udfa6","'&GetTranslated(18,12,"Last raid txt")&'\n\ud83d\udcc4","'&GetTranslated(18,6,"Power")&'\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "' & GetTranslated(18,50,"PC got Hibernate") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'","'&GetTranslated(18,3,"Pause")&'","'&GetTranslated(18,15,"Restart")&'","'&GetTranslated(18,4,"Resume")&'"],["'&GetTranslated(18,2,"Help")&'","'&GetTranslated(18,5,"Delete")&',"'&GetTranslated(18,11,"Lastraid")&'","'&GetTranslated(18,13,"Stats")&'"],["'&GetTranslated(18,14,"Screenshot")&'","'&GetTranslated(18,12,"Last raid txt")&'","'&GetTranslated(18,6,"Power")&'"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 					Shutdown(64)
-					Case GetTranslated(18,8,"Shut down") & "\N\U26A0\UFE0F"
+					Case GetTranslated(18,8,"Shut down")
 						SetLog("Telegram: Your request has been received from " & $iOrigPushBullet & ". Shut down PC", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "' & GetTranslated(18,51,"PC got Shutdown") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'\n\u23f9","'&GetTranslated(18,3,"Pause")&'\n\u23f8","'&GetTranslated(18,15,"Restart")&'\n\u21aa","'&GetTranslated(18,4,"Resume")&'\n\u25b6"],["'&GetTranslated(18,2,"Help")&'\n\u2753","'&GetTranslated(18,5,"Delete")&'\n\ud83d\udeae","'&GetTranslated(18,11,"Lastraid")&'\n\ud83d\udcd1","'&GetTranslated(18,13,"Stats")&'\n\ud83d\udcca"],["'&GetTranslated(18,14,"Screenshot")&'\n\ud83c\udfa6","'&GetTranslated(18,12,"Last raid txt")&'\n\ud83d\udcc4","'&GetTranslated(18,6,"Power")&'\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "' & GetTranslated(18,51,"PC got Shutdown") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'","'&GetTranslated(18,3,"Pause")&'","'&GetTranslated(18,15,"Restart")&'","'&GetTranslated(18,4,"Resume")&'"],["'&GetTranslated(18,2,"Help")&'","'&GetTranslated(18,5,"Delete")&'","'&GetTranslated(18,11,"Lastraid")&'","'&GetTranslated(18,13,"Stats")&'"],["'&GetTranslated(18,14,"Screenshot")&'","'&GetTranslated(18,12,"Last raid txt")&'","'&GetTranslated(18,6,"Power")&'"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 						Shutdown(5)
-					Case GetTranslated(18,9,"Standby") & "\N\U26A0\UFE0F"
+					Case GetTranslated(18,9,"Standby")
 						SetLog("Telegram: Your request has been received from " & $iOrigPushBullet & ". Standby PC", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "' & GetTranslated(18,52,"PC got Standby") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'\n\u23f9","'&GetTranslated(18,3,"Pause")&'\n\u23f8","'&GetTranslated(18,15,"Restart")&'\n\u21aa","'&GetTranslated(18,4,"Resume")&'\n\u25b6"],["'&GetTranslated(18,2,"Help")&'\n\u2753","'&GetTranslated(18,5,"Delete")&'\n\ud83d\udeae","'&GetTranslated(18,11,"Lastraid")&'\n\ud83d\udcd1","'&GetTranslated(18,13,"Stats")&'\n\ud83d\udcca"],["'&GetTranslated(18,14,"Screenshot")&'\n\ud83c\udfa6","'&GetTranslated(18,12,"Last raid txt")&'\n\ud83d\udcc4","'&GetTranslated(18,6,"Power")&'\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "' & GetTranslated(18,52,"PC got Standby") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'","'&GetTranslated(18,3,"Pause")&'","'&GetTranslated(18,15,"Restart")&'","'&GetTranslated(18,4,"Resume")&'"],["'&GetTranslated(18,2,"Help")&'","'&GetTranslated(18,5,"Delete")&'","'&GetTranslated(18,11,"Lastraid")&'","'&GetTranslated(18,13,"Stats")&'"],["'&GetTranslated(18,14,"Screenshot")&'","'&GetTranslated(18,12,"Last raid txt")&'","'&GetTranslated(18,6,"Power")&'"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 						Shutdown(32)
 					Case GetTranslated(18,10,"Cancel")
 						SetLog("Telegram: Your request has been received from " & $iOrigPushBullet & ". Cancel Power option", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "' & GetTranslated(18,53,"canceled") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'\n\u23f9","'&GetTranslated(18,3,"Pause")&'\n\u23f8","'&GetTranslated(18,15,"Restart")&'\n\u21aa","'&GetTranslated(18,4,"Resume")&'\n\u25b6"],["'&GetTranslated(18,2,"Help")&'\n\u2753","'&GetTranslated(18,5,"Delete")&'\n\ud83d\udeae","'&GetTranslated(18,11,"Lastraid")&'\n\ud83d\udcd1","'&GetTranslated(18,13,"Stats")&'\n\ud83d\udcca"],["'&GetTranslated(18,14,"Screenshot")&'\n\ud83c\udfa6","'&GetTranslated(18,12,"Last raid txt")&'\n\ud83d\udcc4","'&GetTranslated(18,6,"Power")&'\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "' & GetTranslated(18,53,"canceled") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'","'&GetTranslated(18,3,"Pause")&'","'&GetTranslated(18,15,"Restart")&'","'&GetTranslated(18,4,"Resume")&'"],["'&GetTranslated(18,2,"Help")&'","'&GetTranslated(18,5,"Delete")&'","'&GetTranslated(18,11,"Lastraid")&'","'&GetTranslated(18,13,"Stats")&'"],["'&GetTranslated(18,14,"Screenshot")&'","'&GetTranslated(18,12,"Last raid txt")&'","'&GetTranslated(18,6,"Power")&'"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
-					Case GetTranslated(18,11,"Lastraid") & "\N\UD83D\UDCD1"
+					Case GetTranslated(18,11,"Lastraid")
 						 If $LootFileName <> "" Then
 						 _PushFileToTelegram($LootFileName, "Loots", "image/jpeg", $iOrigPushBullet & " | " & GetTranslated(18,95,"Last Raid") & "\n" & $LootFileName)
 						Else
 						 _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,32,"There is no last raid screenshot."))
 						EndIf
 						SetLog("Telegram: Push Last Raid Snapshot...", $COLOR_GREEN)
-					Case GetTranslated(18,12,"Last raid txt") & "\N\UD83D\UDCC4"
+					Case GetTranslated(18,12,"Last raid txt")
 						SetLog("Telegram: Your request has been received. Last Raid txt sent", $COLOR_GREEN)
 						_PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,33,"Last Raid txt") & "\n" & " \n[G]: " & _NumberFormat($iGoldLast) & " \n[E]: " & _NumberFormat($iElixirLast) & " \n[D]: " & _NumberFormat($iDarkLast) & " \n[T]: " & $iTrophyLast)
-					Case GetTranslated(18,13,"Stats") & "\N\UD83D\UDCCA"
+					Case GetTranslated(18,13,"Stats")
 						SetLog("Telegram: Your request has been received. Statistics sent", $COLOR_GREEN)
 						_PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,34,"Stats Village Report") & "\n" & GetTranslated(18,35,"At Start") & "\n[G]: " & _NumberFormat($iGoldStart) & " [E]: " & _NumberFormat($iElixirStart) & " [D]: " & _NumberFormat($iDarkStart) & " [T]: " & $iTrophyStart & "\n\n" & GetTranslated(18,36,"Now (Current Resources)") & "\n[G]: " & _NumberFormat($iGoldCurrent) & " [E]: " & _NumberFormat($iElixirCurrent) & " [D]: " & _NumberFormat($iDarkCurrent) & " [T]: " & $iTrophyCurrent & " [GEM]: " & $iGemAmount & "\n \n[" & GetTranslated(18,37,"No. of Free Builders") &"]:"  & $iFreeBuilderCount & "\n [" & GetTranslated(18,38,"No. of Wall Up") & "]: G: " & $iNbrOfWallsUppedGold & "/ E: " & $iNbrOfWallsUppedElixir & "\n\n" & GetTranslated(18,39,"Attacked") & ": " & GUICtrlRead($lblresultvillagesattacked) & "\n" & GetTranslated(18,40,"Skipped") & ": " & $iSkippedVillageCount)
-					Case GetTranslated(18,14,"Screenshot") & "\N\UD83C\UDFA6"
+					Case GetTranslated(18,14,"Screenshot")
 						SetLog("Telegram: ScreenShot request received", $COLOR_GREEN)
 						$RequestScreenshot = 1
-					Case GetTranslated(18,15,"Restart") & "\N\U21AA"
+					Case GetTranslated(18,15,"Restart")
 						SetLog("Telegram: Your request has been received. Bot and BS restarting...", $COLOR_GREEN)
 						_PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,41,"Request to Restart...") & "\n" & GetTranslated(18,42,"Your bot and BS are now restarting..."))
 						SaveConfig()
 						_Restart()
-					Case GetTranslated(18,16,"Stop") & "\N\U23F9"
+					Case GetTranslated(18,16,"Stop")
 						SetLog("Telegram: Your request has been received. Bot is now stopped", $COLOR_GREEN)
 						If $Runstate = True Then
 						 _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(18,43,"Request to Stop...") & "\n" & GetTranslated(18,44,"BOT is now closing..."))
@@ -252,7 +259,7 @@ Func Getchatid()
 		$chat_id2 = _Arraypop($chat_id)
 		$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 		$oHTTP.SetRequestHeader("Content-Type", "application/json")
-		local $ppush3 = '{"text": "' & GetTranslated(18,48,"BOT is now starting telegram") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'\n\u23f9","'&GetTranslated(18,3,"Pause")&'\n\u23f8","'&GetTranslated(18,15,"Restart")&'\n\u21aa","'&GetTranslated(18,4,"Resume")&'\n\u25b6"],["'&GetTranslated(18,2,"Help")&'\n\u2753","'&GetTranslated(18,5,"Delete")&'\n\ud83d\udeae","'&GetTranslated(18,11,"Lastraid")&'\n\ud83d\udcd1","'&GetTranslated(18,13,"Stats")&'\n\ud83d\udcca"],["'&GetTranslated(18,14,"Screenshot")&'\n\ud83c\udfa6","'&GetTranslated(18,12,"Last raid txt")&'\n\ud83d\udcc4","'&GetTranslated(18,6,"Power")&'\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+		local $ppush3 = '{"text": "' & GetTranslated(18,48,"BOT is now starting telegram") & '", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["'&GetTranslated(18,16,"Stop")&'","'&GetTranslated(18,3,"Pause")&'","'&GetTranslated(18,15,"Restart")&'","'&GetTranslated(18,4,"Resume")&'"],["'&GetTranslated(18,2,"Help")&'","'&GetTranslated(18,5,"Delete")&'","'&GetTranslated(18,11,"Lastraid")&'","'&GetTranslated(18,13,"Stats")&'"],["'&GetTranslated(18,14,"Screenshot")&'","'&GetTranslated(18,12,"Last raid txt")&'","'&GetTranslated(18,103,"Camp")&'","'&GetTranslated(18,6,"Power")&'"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 		$oHTTP.Send($pPush3)
 EndFunc   ;==>Getchatid
 
@@ -325,12 +332,6 @@ Func PushMsgToTelegram($Message, $Source = "")
 		;msg when MyBot closing
 		Case "StopMyBot" 
 			If ($TelegramEnabled = 1 And $pStop = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,86, "BOT is now closing"))
-		Case "CAMPSTATUS"
-			If $CampStatus <> "" Then
-				_PushToPushTelegram($iOrigPushBullet & " :\n" & $CampStatus)
-			Else
-				_PushToPushTelegram($iOrigPushBullet & " :\n" & "Camp Status need refresh,Try again after minutes.")
-			EndIf
 		Case "CocError"
 			If ($TelegramEnabled = 1 And $pOOS = 1) Then _PushToPushTelegram($iOrigPushBullet & " | " & GetTranslated(620,69, "CoC Has Stopped Error") & ".....")
 		Case "Pause"
