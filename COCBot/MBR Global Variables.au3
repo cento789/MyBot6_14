@@ -399,6 +399,7 @@ Global $iDeleteAllPBPushesNow = False
 Global $ichkDeleteOldPBPushes
 Global $icmbHoursPushBullet
 Global $chkDeleteAllPBPushes
+Global $CampStatus = ""
 Global $ichkAlertPBCampFull
 Global $ichkAlertPBCampFullTest = 0
 
